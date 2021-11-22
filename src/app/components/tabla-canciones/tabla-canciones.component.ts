@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CancionesService } from 'src/app/services/canciones/canciones.service';
 
 @Component({
   selector: 'app-tabla-canciones',
@@ -7,9 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TablaCancionesComponent implements OnInit {
 
-  constructor() { }
+  constructor(private cancionesService: CancionesService) {     //  Inyección de dependencias del servicio canciones
 
-  ngOnInit(): void {
+  } 
+
+  ngOnInit(): void {            // Inicializar datos
+    console.log('Entra al componente')
+    this.obtenerCanciones();
+  }
+
+  public async obtenerCanciones(){
+    try {
+      const response = await this.cancionesService.obtenerCanciones();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
 }

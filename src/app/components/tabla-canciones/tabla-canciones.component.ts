@@ -1,4 +1,7 @@
+import { LiteralPrimitive } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { CancionModel } from 'src/app/models/cancion';
 import { CancionesService } from 'src/app/services/canciones/canciones.service';
 
 @Component({
@@ -8,21 +11,35 @@ import { CancionesService } from 'src/app/services/canciones/canciones.service';
 })
 export class TablaCancionesComponent implements OnInit {
 
-  constructor(private cancionesService: CancionesService) {     //  Inyección de dependencias del servicio canciones
+  public canciones: CancionModel[] = [];     // Array vacío para guardar las canciones
+  constructor(private cancionesService: CancionesService, private router:Router) {     //  Inyección de dependencias del servicio canciones
 
   } 
 
-  ngOnInit(): void {            // Inicializar datos
-    console.log('Entra al componente')
-    this.obtenerCanciones();
+  async ngOnInit(): Promise<void> {            // Inicializar datos
+    this.canciones = await this.obtenerCanciones();
+    console.log(this.canciones);
   }
 
-  public async obtenerCanciones(){
+  public async obtenerCanciones(): Promise<any>{
     try {
       const response = await this.cancionesService.obtenerCanciones();
-    } catch (error) {
+      return response.datos;
+    }catch(error) {
       console.log(error);
+      this.router.navigate(['/error']);     // Enrutamiento desde el controlador con router de angular
     }
+  }
+
+  public eliminarCancion(id:number){
+    this.cancionesService.eliminarCancion(id).then(async response=>{
+      if(response.message === 'deleted'){
+        this.canciones = await this.obtenerCanciones();   // Para actualizar cuando se borra
+        alert("Canción eliminada correctamente!");
+      }
+    }).catch(error =>{
+      console.log(error);
+    })
   }
 
 }

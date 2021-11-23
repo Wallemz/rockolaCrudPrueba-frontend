@@ -11,12 +11,13 @@ import { PlaylistComponent } from './components/playlist/playlist.component';
 import { CancionesComponent } from './components/canciones/canciones.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CancionesService } from './services/canciones/canciones.service';
+import { ErrorComponent } from './components/error/error.component';
 
 
 // DECORADOR
 @NgModule({
   declarations: [     // Array de componeentes del módulo
-    AppComponent, HeaderComponent, FooterComponent, TablaCancionesComponent, NotFoundComponent, PlaylistComponent, CancionesComponent      // Componente principal
+    AppComponent, HeaderComponent, FooterComponent, TablaCancionesComponent, NotFoundComponent, PlaylistComponent, CancionesComponent, ErrorComponent      // Componente principal
   ],
   imports: [          // Importacioón de los módulos de los que depende el funcionamiento
     BrowserModule,    // Módulo para los navegadores

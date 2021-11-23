@@ -26,7 +26,8 @@ export class CancionesService {
   public actualizarCancion(cancion: any, id: number){
     
   }
-  public eliminarCancion(id: number){
-    
+  public eliminarCancion(id: number): Promise<any>{
+    const url = `${environment.apiUrl}/eliminarCancion`;
+    return this.http.delete(`${url}/${id}`).toPromise();
   }
 }

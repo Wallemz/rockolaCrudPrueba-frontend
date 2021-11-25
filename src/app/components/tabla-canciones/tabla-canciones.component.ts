@@ -12,13 +12,14 @@ import { CancionesService } from 'src/app/services/canciones/canciones.service';
 export class TablaCancionesComponent implements OnInit {
 
   public canciones: CancionModel[] = [];     // Array vacío para guardar las canciones
-  constructor(private cancionesService: CancionesService, private router:Router) {     //  Inyección de dependencias del servicio canciones
+  constructor(private cancionesService: CancionesService, 
+    private router:Router) {     //  Inyección de dependencias del servicio canciones
 
   } 
 
   async ngOnInit(): Promise<void> {            // Inicializar datos
+    localStorage.clear();                     // Borrar eel localStorage
     this.canciones = await this.obtenerCanciones();
-    console.log(this.canciones);
   }
 
   public async obtenerCanciones(): Promise<any>{
@@ -40,6 +41,11 @@ export class TablaCancionesComponent implements OnInit {
     }).catch(error =>{
       console.log(error);
     })
+  }
+
+  public irActualizarCancion(cancion: CancionModel){
+    localStorage.setItem('cancionActualizar', JSON.stringify(cancion));
+    this.router.navigate(['/formulario-cancion']);
   }
 
 }

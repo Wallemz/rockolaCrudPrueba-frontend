@@ -1,0 +1,19 @@
+<div class="contenedor">
+    <h1>{{cancionActualizar ? 'Actualizar canción':'Agregar canción'}}</h1>
+    <form [formGroup]="formGroup">
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Nombre de la canción*</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" formControlName="nombre">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Género*</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" formControlName="genero">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Artista*</label>
+            <input type="text" class="form-control" id="Parkway Drive" formControlName="artista">
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="agregarCancion()" *ngIf="!cancionActualizar">Agregar</button>
+        <button type="submit " class="btn btn-primary " [disabled]="formGroup.invalid " (click)="actualizarCancion()" *ngIf="cancionActualizar">Actualizar</button>
+    </form>
+</div>

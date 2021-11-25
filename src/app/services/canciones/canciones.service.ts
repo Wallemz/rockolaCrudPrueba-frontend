@@ -21,10 +21,12 @@ export class CancionesService {
     
   }
   public agregarCancion(cancion: any){
-    
+    const url = `${environment.apiUrl}/agregarCancion`;
+    return this.http.post(url,cancion).toPromise();
   }
-  public actualizarCancion(cancion: any, id: number){
-    
+  public actualizarCancion(cancion: any){
+    const url = `${environment.apiUrl}/actualizarCancion/${cancion.idcanciones}`;
+    return this.http.put(`${url}`, cancion).toPromise();
   }
   public eliminarCancion(id: number): Promise<any>{
     const url = `${environment.apiUrl}/eliminarCancion`;

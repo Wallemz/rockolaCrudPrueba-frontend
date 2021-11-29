@@ -1,5 +1,5 @@
 import { LiteralPrimitive } from '@angular/compiler';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { CancionModel } from 'src/app/models/cancion';
 import { CancionesService } from 'src/app/services/canciones/canciones.service';
@@ -11,13 +11,17 @@ import { CancionesService } from 'src/app/services/canciones/canciones.service';
 })
 export class TablaCancionesComponent implements OnInit {
 
-  public canciones: CancionModel[] = [];     // Array vacío para guardar las canciones
+  @Input() subtitulo: string = '';            // Recibe input del padre canciones.component.ts
+  @Output() mostrarAlerta = new EventEmitter  // Recibe un evento dle padre EventEmitter de angular
+  public canciones: CancionModel[] = [];      // Array vacío para guardar las canciones
+  
   constructor(private cancionesService: CancionesService, 
     private router:Router) {     //  Inyección de dependencias del servicio canciones
 
   } 
 
-  async ngOnInit(): Promise<void> {            // Inicializar datos
+  async ngOnInit(): Promise<void> {           // Inicializar datos
+    console.log(this.subtitulo);              // Accedo al dato que traigo del padre
     localStorage.clear();                     // Borrar eel localStorage
     this.canciones = await this.obtenerCanciones();
   }
@@ -36,7 +40,7 @@ export class TablaCancionesComponent implements OnInit {
     this.cancionesService.eliminarCancion(id).then(async response=>{
       if(response.message === 'deleted'){
         this.canciones = await this.obtenerCanciones();   // Para actualizar cuando se borra
-        alert("Canción eliminada correctamente!");
+        this.mostrarAlerta.emit({mostrarAlert:true});     // Emito el evento al padre
       }
     }).catch(error =>{
       console.log(error);

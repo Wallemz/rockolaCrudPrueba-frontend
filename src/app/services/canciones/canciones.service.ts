@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { environment } from 'src/environments/environment';
 
 @Injectable({                     // Inyección de dependencias, para evitar creart objetos en cada componente
@@ -15,8 +15,19 @@ export class CancionesService {
   // METODOS
   public obtenerCanciones(): Promise<any>{
     const url = `${environment.apiUrl}/obtenerCanciones`;
-    return this.http.get(url).toPromise();
+    // Enviar headers al back
+    const headers: HttpHeaders = new HttpHeaders({
+      isadmin:'true'
+    })
+
+    // Enviar Params al back
+    const params = {
+      idcancion: 1,
+      idplaylisst: 2
+    }
+    return this.http.get(url, {headers, params}).toPromise();
   }
+
   public obtenerCancion(id: number){
     
   }

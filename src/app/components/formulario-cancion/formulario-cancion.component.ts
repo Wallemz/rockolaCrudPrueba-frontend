@@ -36,7 +36,7 @@ export class FormularioCancionComponent implements OnInit {
     console.log(this.formGroup.value);      // Imprime los datos ingresados en los inputs
     this.cancionesService.agregarCancion(this.formGroup.value).then(response => {
       alert('Canción creada correctamente!')
-      this.router.navigate(['/canciones']);
+      this.router.navigate(['/canciones'], {queryParams: {mostrarAlerta:'agregar'}}); // Paso información de formulario-cancion a canciones a través de query params
     }).catch(error => {
       this.router.navigate(['/error']);
     }

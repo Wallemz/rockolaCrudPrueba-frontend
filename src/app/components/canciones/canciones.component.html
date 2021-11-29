@@ -1,5 +1,8 @@
 <div class="contenedor">
+    <div class="alert alert-danger" role="alert" *ngIf="showAlert">
+        Canción elminada correctamente!
+    </div>
     <h1>Lista de canciones</h1>
-    <app-tabla-canciones></app-tabla-canciones>
+    <app-tabla-canciones [subtitulo]="subtituloTabla" (mostrarAlerta)="mostrarAlerta($event)"></app-tabla-canciones>
     <button type="button" class="btn btn-primary" routerLink="/formulario-cancion">Agregar</button>
 </div>
